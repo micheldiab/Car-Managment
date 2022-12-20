@@ -5,6 +5,7 @@ export default function Page404()
 {
 
     return (
+        <div className="container">
         <div class="d-flex align-items-center justify-content-center vh-100">
         <div class="text-center">
             <h1 class="display-1 fw-bold">404</h1>
@@ -15,7 +16,7 @@ export default function Page404()
             <a href="index.html" class="btn btn-primary">Go Home</a>
         </div>
     </div>
-
+    </div>
         );
     }
 
