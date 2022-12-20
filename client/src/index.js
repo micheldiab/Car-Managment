@@ -7,6 +7,7 @@ import ResetPasswordPage from './components/ResetPasswordPage';
 import Page404 from './components/404Page';
 import DashboardPage from './components/Dashboard';
 import Table from './components/Table';
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -16,8 +17,13 @@ root.render(
    {/* <RegistrationPage /> */}
    {/* <ResetPasswordPage /> */}
    {/* <Page404 /> */}
-   <Table />
-   {/* <DashboardPage /> */}
+
+
+   <Table /> 
+ 
+   
+   {/*  */}
+ 
   </React.StrictMode>
 );
 

@@ -1,6 +1,11 @@
-th
-{
-    cursor: pointer;
+
+td{
+
+    font-weight: bold;
+
 
 }
-
+button
+{
+    border: none;
+}
