@@ -2,17 +2,28 @@ import React from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 
 
+
+
 export default function Dashboard() {
   return (
-    <div classNameName="container-fluid">
-         <div style={{textAlign: "center"}}>
-    <div className="d-flex justify-content-center bg-secondary mb-3">
-  <div className="p-2 bg-info">
-    <button>Flex item 1</button></div>
-  <div className="p-2 bg-warning"><button>Flex item 2</button></div>
-  <div className="p-2 bg-primary"><button>Flex item 3</button></div>
-</div>
-</div>
+
+    <div className="container-fluid" style={{ backgroundColor: 'blue' }}>
+      <div className="d-flex justify-content-center mb-2">
+
+        <div className="p-2 -info d-flex align-items-center" style={{fontFamily:'bold'}}>
+          <button className="btn btn-primary btn-block" type="button">About US</button>
+        </div>
+        <div className="p-2 -warning">
+          <button className="btn btn-primary btn-block" type="button">Dashboard</button>
+        </div>
+        
+      </div>
+      
     </div>
+       
+         
   );
 }
+
+
+

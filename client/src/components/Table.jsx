@@ -94,7 +94,7 @@ export default function Table()
     {
       treatNumber: '8',
       Information: 'T1',
-      Date: '2022-02-01T11:00:00.000Z',
+      Date: '2022-02-01T11:00:00.001Z',
       email: "michel@",
       carNumber:"123",
     },
@@ -119,13 +119,26 @@ export default function Table()
       email: "michel@",
       carNumber:"123",
     },
-
+    {
+      treatNumber: '12',
+      Information: 'T1',
+      Date: '2022-02-01T11:00:00.000Z',
+      email: "michel@",
+      carNumber:"123",
+    },
+    {
+      treatNumber: '13',
+      Information: 'T1',
+      Date: '2022-02-01T11:00:00.000Z',
+      email: "michel@",
+      carNumber:"123",
+    },
 
 
   ]);
 
   const [currentPage, setCurrentPage] = useState(1);
-const [recordsPerPage] = useState(10);
+const [recordsPerPage] = useState(9);
 let indexOfLastRecord = currentPage * recordsPerPage;
 let  indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
 
@@ -276,29 +289,7 @@ function handleSearch(event)
       onChange={handleSearch}
     />
 
- {/* <div className='row'  style={{cursor:"pointer",background:"blue",border:"solid 5px black",color:"white"}}>
-  <div className='col'>
-<th  onClick={() => sortByNumber()}>Treatment Num</th>
-</div>
-<div className='col'>
-<th onClick={() => sortByInformation()}>Treatment Info</th>
-</div>
-<div className='col'>
-<th onClick={() => sortByDate()}>Date</th>
-</div>
-<div className='col'>
-<th onClick={() => sortByWorkerEmail()}>Worker email </th>
-</div>
-<div className='col'>
-<th onClick={() => sortByCarNumber()}>Car Num</th>
-</div>
-<div className='col'>
-<th >Action</th>
 
-</div>
-
-
-</div>  */}
 
 
 
@@ -378,66 +369,61 @@ function handleSearch(event)
       </tbody>
     </table>
 
-
-
-<div className='row'>
-<div className='col'> 
-<p>Showing {(currentRecords.length===0 ? 0 : (currentPage-1)*recordsPerPage +1)} to {filteredData.length>(currentPage*recordsPerPage) ? (currentPage*recordsPerPage) : filteredData.length } of {filteredData.length} entries</p></div>
-<div className='col'>
-
-<nav aria-label="Page navigation example">
-  <ul className="pagination">
-
-
-    <li className="page-item">
-      <a
-        className="page-link"
-        href="#"
-        onClick={() => handlePageMinus(currentPage - 1)}
-      >
-        Previous
-      </a>
-
-    </li>
-
-    <ul className="pagination">
-  {[...Array(totalPages)].map((page, index) => (
-    <li className="page-item" key={index}>
-      <a
-        className="page-link"
-        href="#"
-        onClick={() => handlePagePlus(index + 1)}
-      >
-        {index + 1}
-      </a>
-    </li>
-  ))}
-</ul>
-    <li className="page-item">
-    <a
-          className="page-link"
-          href="#"
-          onClick={() => handlePagePlus(currentPage + 1)}
-        >
-          Next
-        </a>
+    <div className='row d-flex justify-content-between'>
+  <div className='col'> 
+    <p className="d-block">Showing {(currentRecords.length===0 ? 0 : (currentPage-1)*recordsPerPage +1)} to {filteredData.length>(currentPage*recordsPerPage) ? (currentPage*recordsPerPage) : filteredData.length } of {filteredData.length} entries</p>
+  </div>
+  <div className='col'>
+    <nav aria-label="Page navigation example" className="d-block">
+      <ul className="pagination flex-wrap-nowrap">
+        <li className="page-item d-flex align-items-center">
+          <a
+            className="page-link"
+            href="#"
+            onClick={() => handlePageMinus(currentPage - 1)}
+          >
+            Previous
+          </a>
         </li>
-
-     
-
-   </ul>
-
-
-
+        <ul className="pagination">
+          {[...Array(totalPages)].map((page, index) => (
+            <li className="page-item d-flex align-items-center" key={index}>
+              <a
+                className="page-link"
+                href="#"
+                onClick={() => handlePagePlus(index + 1)}
+              >
+                {index + 1}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <li className="page-item d-flex align-items-center">
+          <a
+            className="page-link"
+            href="#"
+            onClick={() => handlePagePlus(currentPage + 1)}
+          >
+            Next
+          </a>
+        </li>
+      </ul>
     </nav>
-    </div>
+  </div>
+</div>
+
+
+
+
+
+
     <div className='col'></div>
 
     </div>
    
   
 
-</div>
+
     );
 
 
