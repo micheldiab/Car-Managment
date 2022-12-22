@@ -15,7 +15,7 @@ export default function ResetPasswordPage()
 
 
     const validateEmail=()=> {
-        let password="";
+    
         if (userEmail.search(/@/) === -1) {
        
             setStatus("Your email must contains @");
@@ -30,17 +30,18 @@ export default function ResetPasswordPage()
             setStatus("This email doesn't exist")
             else
             {
+            Axios.post("https://car-managment.vercel.app/sendResetPassword", {
+                    email: userEmail,
+                    password:response.data,
+                  }).then((response) => {
+                 
+                  });
             setStatus("Check your email for the new password")
-           password=response.data;
+          
             }
           });
-          console.log(password);
-          Axios.post("https://car-managment.vercel.app/sendResetPassword", {
-            email: userEmail,
-            password:password,
-          }).then((response) => {
-         
-          });
+ 
+       
 
     }
 return (
