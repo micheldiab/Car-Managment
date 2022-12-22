@@ -114,13 +114,14 @@ db.query("UPDATE cars SET Information = ?,Date=?,email=?,carNumber=? WHERE treat
       res.send("-1");
       else
       {
+        let text="Your new password is:";
+        text+=newPassword;
+        sendEmail(email,subject,text);
     db.query("UPDATE users SET password = ? WHERE email = ?", [pass,email] 
     ,(err, result) => {
         const subject="Reset password"
     
-        let text="Your new password is:";
-        text+=newPassword;
-       sendEmail(email,subject,text);
+       
        res.send("0");
       
     
