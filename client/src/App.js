@@ -6,6 +6,7 @@ import RegistrationPage from './components/RegistrationPage';
 import ResetPasswordPage from './components/ResetPasswordPage';
 import Page404 from './components/404Page';
 import Table from './components/Table';
+import AboutUs from './components/AboutUS';
 
 
 function App() {
@@ -17,7 +18,8 @@ function App() {
     <Route path="/register"element={<RegistrationPage />} />
     <Route path="/Dashboard"element={<Table />} />
     <Route path="*"element={<Page404 />} />
-
+    <Route path='AboutUs' element={<AboutUs />} />
+ 
   </Routes>
   );
 }

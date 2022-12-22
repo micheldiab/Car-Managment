@@ -41,6 +41,7 @@ export default function RegistrationPage()
 
 
     async function validateSignUp(event){
+        event.preventDefault()
         let regName= /^[a-zA-Z]+$/;
         if(!regName.test(firstName)){
             setStatus("Your First Name must contains letters only");
@@ -108,19 +109,12 @@ export default function RegistrationPage()
             window.alert("Email:" + userEmail+"\n" +"Password:" +userPassword);
           }});
     
-            event.preventDefault();
-            const response = await fetch('/send-email', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email })
-            });
-            const result = await response.json();
-            console.log(result);
-        
-
-
-
-      
+    
+          Axios.post("http://localhost:3001/sendEmail", {
+            email: userEmail,
+          }).then((response) => {
+          });
+       
          
     }
 

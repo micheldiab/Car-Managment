@@ -2,6 +2,7 @@ import React from 'react';
 import {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import carimage from '../images/logincar.png'
+import Axios from "axios";
 export default function ResetPasswordPage()
 {
     const [userEmail, setEmail] = useState("");
@@ -19,6 +20,16 @@ export default function ResetPasswordPage()
             setStatus("Your email must contains @");
             return;
           }
+
+          
+          Axios.post("http://localhost:3001/forgotPassword", {
+            email: userEmail,
+          }).then((response) => {
+            if(response.data ===-1)
+            setStatus("This email doesn't exist")
+            else
+            setStatus("Check your email for the new password")
+          });
 
     }
 return (
