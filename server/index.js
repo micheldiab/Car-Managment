@@ -88,6 +88,17 @@ db.query("UPDATE cars SET Information = ?,Date=?,email=?,carNumber=? WHERE treat
     });
   });
 
+  
+  app.post("/sendResetPassword", (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const subject="Reset password"
+    let text="Your new password is:";
+    text+=password;
+   sendEmail(email,subject,text);
+  
+  });
+
 
   app.post("/sendEmail", (req, res) => {
     const email = req.body.email;
@@ -116,11 +127,7 @@ db.query("UPDATE cars SET Information = ?,Date=?,email=?,carNumber=? WHERE treat
       {
     db.query("UPDATE users SET password = ? WHERE email = ?", [pass,email] 
     ,(err, result) => {
-        const subject="Reset password"
-    
-        let text="Your new password is:";
-        text+=newPassword;
-     //  sendEmail(email,subject,text);
+   
        res.send(newPassword);
       
     
