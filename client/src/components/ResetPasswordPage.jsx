@@ -25,7 +25,7 @@ export default function ResetPasswordPage()
           Axios.post("https://car-managment.vercel.app/forgotPassword", {
             email: userEmail,
           }).then((response) => {
-            if(response.data ===-1)
+            if(!(response.data ===0))
             setStatus("This email doesn't exist")
             else
             setStatus("Check your email for the new password")

@@ -114,7 +114,7 @@ export default function RegistrationPage()
             email: userEmail,
           }).then((response) => {
           });
-       
+          setStatus("Sign up successfully ");
          
     }
 
