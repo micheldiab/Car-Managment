@@ -22,7 +22,7 @@ export default function ResetPasswordPage()
           }
 
           
-          Axios.post("http://localhost:3001/forgotPassword", {
+          Axios.post("https://car-managment.vercel.app/forgotPassword", {
             email: userEmail,
           }).then((response) => {
             if(response.data ===-1)

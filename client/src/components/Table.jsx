@@ -37,7 +37,7 @@ export default function  Table()
     })
     
 
-    Axios.post("http://localhost:3001/editRow", {
+    Axios.post("https://car-managment.vercel.app/editRow", {
               treatNumber: id,
               valInformation:updatedData[id-1].Information,
               valDate:updatedData[id-1].Date,
@@ -225,7 +225,7 @@ function handleSearch(event)
     setFilteredData(filteredData.filter(row=> row.treatNumber !== id));
     const data = filteredData.filter(row=> row.treatNumber !== id);
     setCurrentRecords(data.slice(indexOfFirstRecord, indexOfLastRecord));
-    Axios.post("http://localhost:3001/deleteRow", {
+    Axios.post("https://car-managment.vercel.app/deleteRow", {
       treatNumber:id,
     });
 
