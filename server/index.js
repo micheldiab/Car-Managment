@@ -108,11 +108,7 @@ db.query("UPDATE cars SET Information = ?,Date=?,email=?,carNumber=? WHERE treat
 
     db.query("UPDATE users SET password = ? WHERE email = ?", [pass,email] 
     ,(err, result) => {  
-    if(result.affectedRows===0)
-    {
-    res.send("-1");
-    return;
-    }
+
     });
 
   sendEmail(email,subject,text);
