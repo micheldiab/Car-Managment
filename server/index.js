@@ -99,9 +99,7 @@ db.query("UPDATE cars SET Information = ?,Date=?,email=?,carNumber=? WHERE treat
 
   app.post("/forgotPassword", (req, res) => {
     const email = req.body.email;
-    const newPassword=generatePassword();
-    const pass=md5(newPassword);
-    
+
 
     db.query("Select * FROM users WHERE email = ?", [email] 
     ,(err, result) => {
@@ -114,20 +112,26 @@ db.query("UPDATE cars SET Information = ?,Date=?,email=?,carNumber=? WHERE treat
       res.send("-1");
       else
       {
-    db.query("UPDATE users SET password = ? WHERE email = ?", [pass,email] 
-    ,(err, result) => {
-        const subject="Reset password"
-    
-        let text="Your new password is:";
-        text+=newPassword;
-       sendEmail(email,subject,text);
-       res.send("0");
-      
-    
-    });
+        res.send("0");
   }
 
   });
+});
+
+app.post("/updatePassword", (req, res) => {
+  const email = req.body.email;
+  let newPassword=generatePassword();
+  let pass=md5(newPassword);
+  
+db.query("UPDATE users SET password = ? WHERE email = ?", [pass,email] 
+,(err, result) => {
+   let subject="Reset password"
+
+    let text="Your new password is:";
+    text+=newPassword;
+   sendEmail(email,subject,text);
+  
+});
 });
 
 
