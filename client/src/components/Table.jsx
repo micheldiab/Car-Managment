@@ -118,6 +118,19 @@ function handlePagePlus(pageNumber) {
     )}).slice(pageNumber * recordsPerPage- recordsPerPage, pageNumber * recordsPerPage));
 }
 }
+
+function handleInsert()
+{
+  Axios.post("https://car-managment.vercel.app/addCar", {
+    treatNumber:"10",
+    Information:"aa",
+    Date:"2045-01-08 10:16:10",
+    email:"michel@",
+    carNumber:"123485"
+  });
+
+
+}
 function handlePageMinus(pageNumber) {
   if(pageNumber>0)
   {
@@ -266,14 +279,11 @@ function handleSearch(event)
             {editingId === row.treatNumber? (
               <>
                <td>
-                  <input
-                    value={row.treatNumber}
-                    defaultValue={row.treatNumber}
-                    name="treatNumber"
-                    onChange={handleInputChange}
+                  <label>
+              {row.treatNumber}</label>
      
                     
-                  />
+                  
                 </td>
                 <td>
                   <input
@@ -341,6 +351,17 @@ function handleSearch(event)
   <div className='col'>
     <nav aria-label="Page navigation example" className="d-block">
       <ul className="pagination flex-wrap-nowrap">
+
+      <li className="page-item d-flex align-items-center">
+          <a
+            className="page-link"
+            href="#"
+            onClick={handleInsert}
+          >
+            Insert
+          </a>
+        </li>
+        
         <li className="page-item d-flex align-items-center">
           <a
             className="page-link"
