@@ -71,14 +71,14 @@ db.query("UPDATE cars SET Information = ?,Date=?,email=?,carNumber=? WHERE treat
 
 
   app.post("/addCar", (req, res) => {
-    const treatNumber= req.body.treatNumber;
+   
     const Information = req.body.Information;
     const Date = req.body.Date;
     const email = req.body.email;
     const carNumber = req.body.carNumber;
     db.query(
-      "INSERT cars(`treatNumber`,`Information`, `Date`,`email`,`carNumber`) VALUES (?,?,?,?,?)",
-      [treatNumber, Information, Date,email ,carNumber],
+      "INSERT cars(`Information`, `Date`,`email`,`carNumber`) VALUES (?,?,?,?)",
+      [Information, Date,email ,carNumber],
       (err, result) => {
         if (err) {
           res.send("-1");

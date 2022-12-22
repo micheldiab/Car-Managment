@@ -13,7 +13,40 @@ export default function  Table()
   const [search, setSearch] = useState("");
   const [sortOrder, setSortOrder] = useState('asc');
   const [editingId, setEditingId] = useState(null);
+  const [information, setInformation] = useState("");
+  const [email, setEmail] = useState("");
+  const [carNumber, setCarNumber] = useState(0);
+  const [date, setDate] = useState();
   const [inputValues, setInputValues] = useState({});
+
+
+ const handleAddRow =() =>
+ {
+  console.log(information);
+  console.log(date);
+  console.log(email);
+  console.log(carNumber);
+ }
+
+
+  const handleInformation =(event) =>
+  {
+setInformation(event.target.value);
+  }
+  const handleEmail =(event) =>
+  {
+    setEmail(event.target.value);
+  }
+  const handleCarNumber=(event) =>
+  {
+    setCarNumber(event.target.value);
+  }
+  const handleDate=(event) =>
+  {
+    setDate(event.target.value);
+  }
+
+
   const handleEditClick = (id) => {
 
     setEditingId(id);
@@ -52,7 +85,7 @@ export default function  Table()
     setFilteredData(updatedData);
     setCurrentRecords(updatedData.filter((row) => {
       return (
-        row.treatNumber.toLowerCase().startsWith(search.toLowerCase()) ||
+        row.treatNumber.toString().toLowerCase().startsWith(search.toLowerCase()) ||
         row.Information.toLowerCase().startsWith(search.toLowerCase()) ||
         row.Date.toLowerCase().startsWith(search.toLowerCase())||
         row.email.toLowerCase().startsWith(search.toLowerCase())||
@@ -79,7 +112,7 @@ useEffect(() => {
       setFilteredData(
         Array.from(response.data).filter((row) => {
           return (
-            row.treatNumber.toLowerCase().startsWith(search.toLowerCase()) ||
+            row.treatNumber.toString().toLowerCase().startsWith(search.toLowerCase()) ||
             row.Information.toLowerCase().startsWith(search.toLowerCase()) ||
             row.Date.toLowerCase().startsWith(search.toLowerCase()) ||
             row.email.toLowerCase().startsWith(search.toLowerCase()) ||
@@ -110,7 +143,7 @@ function handlePagePlus(pageNumber) {
   
   setCurrentRecords(filteredData.filter((row) => {
     return (
-      row.treatNumber.toLowerCase().startsWith(search.toLowerCase()) ||
+      row.treatNumber.toString().toLowerCase().startsWith(search.toLowerCase()) ||
       row.Information.toLowerCase().startsWith(search.toLowerCase()) ||
       row.Date.toLowerCase().startsWith(search.toLowerCase())||
       row.email.toLowerCase().startsWith(search.toLowerCase())||
@@ -137,7 +170,7 @@ function handlePageMinus(pageNumber) {
   setCurrentPage(pageNumber);
  setCurrentRecords(filteredData.filter((row) => {
     return (
-      row.treatNumber.toLowerCase().startsWith(search.toLowerCase()) ||
+      row.treatNumber.toString().toLowerCase().startsWith(search.toLowerCase()) ||
       row.Information.toLowerCase().startsWith(search.toLowerCase()) ||
       row.Date.toLowerCase().startsWith(search.toLowerCase())||
       row.email.toLowerCase().startsWith(search.toLowerCase())||
@@ -153,7 +186,7 @@ function handleSearch(event)
   setSearch(event.target.value);
   const data=filteredData.filter((row) => {
     return (
-      row.treatNumber.toLowerCase().startsWith(event.target.value.toLowerCase()) ||
+      row.treatNumber.toString().toLowerCase().startsWith(event.target.value.toLowerCase()) ||
       row.Information.toLowerCase().startsWith(event.target.value.toLowerCase()) ||
       row.Date.toLowerCase().startsWith(event.target.value.toLowerCase())||
       row.email.toLowerCase().startsWith(event.target.value.toLowerCase())||
@@ -257,6 +290,65 @@ function handleSearch(event)
       placeholder="Search..."
       onChange={handleSearch}
     />
+    <table className="table table-striped">
+      <thead>
+        <tr style={{cursor:"pointer",background:"blue",border:"solid 5px black",color:"white"}}>
+        <th>Treatment Info</th>
+        <th>Date</th>
+        <th>Worker email </th>
+        <th>Car Num</th>
+        <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+                <td>
+                  <input
+                    type="text"
+               
+                    name="Information"
+                    onChange={handleInformation}
+                    required
+     
+                    
+                  />
+                </td>
+                <td>
+                  <input
+                    type="datetime-local"
+                 
+                    name="Date"
+                    onChange={handleDate}
+                    required
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                 
+                    name="email"
+                    onChange={handleEmail}
+                    required
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                  
+                    name="carNumber"
+                    onChange={handleCarNumber}
+                    required
+                  />
+                </td>
+              
+                <td>
+                  <button type="button" onClick={handleAddRow} >Add row</button>
+
+                </td>
+                </tr>
+      
+      </tbody>
+    </table>
 
 
 
@@ -414,4 +506,3 @@ function handleSearch(event)
 
 
 }
-
