@@ -34,7 +34,7 @@ export default function ResetPasswordPage()
             flag=0;
             }
           });
-
+        console.log(flag);
           if(flag===0)
           {
             Axios.post("https://car-managment.vercel.app/updatePassword", {
