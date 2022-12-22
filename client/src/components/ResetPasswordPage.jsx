@@ -31,11 +31,10 @@ export default function ResetPasswordPage()
             else
             {
             setStatus("Check your email for the new password")
-            console.log(response.data);
            password=response.data;
             }
           });
-
+          console.log(password);
           Axios.post("https://car-managment.vercel.app/sendResetPassword", {
             email: userEmail,
             password:password,
