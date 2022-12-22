@@ -265,6 +265,16 @@ function handleSearch(event)
           <tr key={row.treatNumber}>
             {editingId === row.treatNumber? (
               <>
+               <td>
+                  <input
+                    value={row.treatNumber}
+                    defaultValue={row.treatNumber}
+                    name="treatNumber"
+                    onChange={handleInputChange}
+     
+                    
+                  />
+                </td>
                 <td>
                   <input
                     type="text"
