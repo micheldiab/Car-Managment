@@ -72,7 +72,7 @@ export default function  Table()
   let  indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
 
 useEffect(() => {
-  Axios.get("http://localhost:3001/cars")
+  Axios.get("https://car-managment.vercel.app/cars")
     .then((response) => {
    
       setData(response.data);
