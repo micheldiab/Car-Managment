@@ -3,16 +3,34 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import ReCAPTCHA from "react-google-recaptcha";
 import carimage from '../images/logincar.png'
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import Axios from "axios";
 export default function LoginPage()
 {
+    const md5 = require('md5');
+    const history = useNavigate();
     const [userEmail, setEmail] = useState("");
     const [userPassword, setPassword] = useState("");
     const [status, setStatus] = useState("");
     const [rememberMe, setRememberMe] = useState(0);
+    
     const [reCAPTCHAValue, setReCAPTCHAValue] = useState(0);
+    const [cookies, setCookie] = useCookies(['session']);
 
-
+      useEffect(() => {
+        // Check for a stored session in local storage
+        const storedSession = localStorage.getItem('session');
+        if (storedSession) {
+          // If the session is stored, fill in the username and password
+          const session = JSON.parse(storedSession);
+          setEmail(session.userEmail);
+          setPassword(session.userPassword);
+          setRememberMe(1);
+        }
+      }, []); // Only run this effect once
+   
     const onChange=(value)=> {
         setReCAPTCHAValue(value);
     }
@@ -25,12 +43,11 @@ export default function LoginPage()
         setPassword(e.target.value);
     }
 
-    const handleRememberMeChange=(e)=>{
-        setRememberMe(e.target.checked)
-    }
 
 
-    const validateLogin=()=> {
+    const validateLogin=(event)=> {
+        event.preventDefault();
+   
         if(reCAPTCHAValue===0){
             setStatus("You must solve the ReCAPTCHA");
             return;
@@ -65,13 +82,27 @@ export default function LoginPage()
             setStatus("Your password needs a number");
             return;
            }
-    
-      
-        setStatus("Please Wait...");
 
-        window.alert("Email:" + userEmail+"\n" +"Password:" +userPassword);
-   
+ 
+           Axios.post("http://localhost:3001/userLogin", {
+           email: userEmail,
+           password: md5(userPassword)
+         }).then((response) => {
+           console.log(response);
+           if(response.data===-1)  
+           setStatus("The username or password is incorrect");
+           else
+           {
+               setStatus("connected");
+               history('/Dashboard');
+         }});
 
+         if (rememberMe) {
+            localStorage.setItem('session', JSON.stringify({ userEmail, userPassword }));
+        
+        }
+        
+     
     }
 
 
@@ -111,7 +142,9 @@ return(
                                 </div>
                                 <div className="form-group">
                                     <div className="custom-control custom-checkbox small">
-                                        <input type="checkbox" className="custom-control-input" id="customCheck" onChange={handleRememberMeChange}/>
+                                        <input type="checkbox" className="custom-control-input"   id="rememberMe"
+          checked={rememberMe}
+          onChange={(event) => setRememberMe(event.target.checked)}/>
                                         <label className="custom-control-label" for="customCheck">Remember
                                             Me</label>
                                     </div>

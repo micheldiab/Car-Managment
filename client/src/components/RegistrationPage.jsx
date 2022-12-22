@@ -3,8 +3,10 @@ import {useState} from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 import 'bootstrap/dist/css/bootstrap.css';
 import carimage from '../images/logincar.png'
+import Axios from "axios";
 export default function RegistrationPage()
 {
+    const md5 = require('md5');
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
 
@@ -38,7 +40,7 @@ export default function RegistrationPage()
     }
 
 
-    const validateSignUp=()=> {
+    async function validateSignUp(event){
         let regName= /^[a-zA-Z]+$/;
         if(!regName.test(firstName)){
             setStatus("Your First Name must contains letters only");
@@ -88,12 +90,38 @@ export default function RegistrationPage()
             return;
            }
     
+           
+           Axios.post("http://localhost:3001/addUser", {
+            firstName: firstName,
+            lastName: lastName,
+            email: userEmail,
+            password:  md5(userPassword)
+          }).then((response) => {
+            console.log(response);
+            if(response.data===-1)
+            {
+            setStatus("The email is already in use ");
+            return;
+            }
+            else
+            {
+            window.alert("Email:" + userEmail+"\n" +"Password:" +userPassword);
+          }});
+    
+            event.preventDefault();
+            const response = await fetch('/send-email', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email })
+            });
+            const result = await response.json();
+            console.log(result);
+        
+
+
+
       
-        setStatus("Please Wait...");
-
-        window.alert("Email:" + userEmail+"\n" +"Password:" +userPassword);
-   
-
+         
     }
 
 return(

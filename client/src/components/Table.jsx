@@ -1,11 +1,15 @@
 import React from 'react';
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Table.css';
 import Dashboard from './Dashboard';
-export default function Table() 
+import Axios from "axios";
 
+
+export default function  Table() 
 {
+
+
   const [search, setSearch] = useState("");
   const [sortOrder, setSortOrder] = useState('asc');
   const [editingId, setEditingId] = useState(null);
@@ -18,14 +22,32 @@ export default function Table()
     const { name, value } = event.target;
 
     setInputValues({ ...inputValues, [name]: value });
+    
+ 
   }
   const handleSaveClick = (id) => {
+   
     const updatedData = filteredData.map(row => {
       if (row.treatNumber=== id) {
         return { ...row, ...inputValues };
+      
       }
+   
       return row;
-    });
+    })
+    
+
+    Axios.post("http://localhost:3001/editRow", {
+              treatNumber: id,
+              valInformation:updatedData[id-1].Information,
+              valDate:updatedData[id-1].Date,
+              valEmail:updatedData[id-1].email,
+              valCarNumber:updatedData[id-1].carNumber,
+                }).then((response) => {
+      });
+
+
+
 
     setFilteredData(updatedData);
     setCurrentRecords(updatedData.filter((row) => {
@@ -40,119 +62,43 @@ export default function Table()
     setEditingId(null);
   }
 
-
-  const [data, setData] = useState([
-    {
-      treatNumber: '1',
-      Information: 'T1',
-      Date: '2022-02-01T11:00:00.000Z',
-      email: "michel@",
-      carNumber:"123",
-    },
-    {
-      treatNumber: '2',
-      Information: 'TT',
-      Date: '2022-02-01T11:00:00.000Z',
-      email: "michel@",
-      carNumber:"123",
-    },
-    {
-      treatNumber: '3',
-      Information: 'T1',
-      Date: '2022-02-01T11:00:00.000Z',
-      email: "michel@",
-      carNumber:"123",
-    },
-    {
-      treatNumber: '4',
-      Information: 'T1',
-      Date: '2022-02-01T11:00:00.000Z',
-      email: "michel@",
-      carNumber:"123",
-    },
-    {
-      treatNumber: '5',
-      Information: 'T1',
-      Date: '2022-02-01T11:00:00.000Z',
-      email: "michel@",
-      carNumber:"123",
-    },
-    {
-      treatNumber: '6',
-      Information: 'T1',
-      Date: '2022-02-01T11:00:00.000Z',
-      email: "michel@",
-      carNumber:"123",
-    },
-    {
-      treatNumber: '7',
-      Information: 'T1',
-      Date: '2022-02-01T11:00:00.000Z',
-      email: "michel@",
-      carNumber:"123",
-    },
-    {
-      treatNumber: '8',
-      Information: 'T1',
-      Date: '2022-02-01T11:00:00.001Z',
-      email: "michel@",
-      carNumber:"123",
-    },
-    {
-      treatNumber: '9',
-      Information: 'T1',
-      Date: '2022-02-01T11:00:00.000Z',
-      email: "michel@",
-      carNumber:"123",
-    },
-    {
-      treatNumber: '10',
-      Information: 'T1',
-      Date: '2022-02-01T11:00:00.000Z',
-      email: "michel@",
-      carNumber:"123",
-    },
-    {
-      treatNumber: '11',
-      Information: 'T1',
-      Date: '2022-02-01T11:00:00.000Z',
-      email: "michel@",
-      carNumber:"123",
-    },
-    {
-      treatNumber: '12',
-      Information: 'T1',
-      Date: '2022-02-01T11:00:00.000Z',
-      email: "michel@",
-      carNumber:"123",
-    },
-    {
-      treatNumber: '13',
-      Information: 'T1',
-      Date: '2022-02-01T11:00:00.000Z',
-      email: "michel@",
-      carNumber:"123",
-    },
-
-
-  ]);
-
+ 
+  const [data, setData] = useState([]);
+  const [filteredData,setFilteredData]= useState([]);
+  const [currentRecords,setCurrentRecords]= useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-const [recordsPerPage] = useState(9);
-let indexOfLastRecord = currentPage * recordsPerPage;
-let  indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const [recordsPerPage] = useState(9);
+  let indexOfLastRecord = currentPage * recordsPerPage;
+  let  indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
 
-const [filteredData,setFilteredData] = useState(data.filter((row) => {
-  return (
-    
-    row.treatNumber.toLowerCase().startsWith(search.toLowerCase()) ||
-    row.Information.toLowerCase().startsWith(search.toLowerCase()) ||
-    row.Date.toLowerCase().startsWith(search.toLowerCase())||
-    row.email.toLowerCase().startsWith(search.toLowerCase())||
-    row.carNumber.toLowerCase().startsWith(search.toLowerCase())
-  );
-}));
-const [currentRecords,setCurrentRecords] = useState(filteredData.slice(indexOfFirstRecord, indexOfLastRecord));
+useEffect(() => {
+  Axios.get("http://localhost:3001/cars")
+    .then((response) => {
+   
+      setData(response.data);
+      setFilteredData(
+        Array.from(response.data).filter((row) => {
+          return (
+            row.treatNumber.toLowerCase().startsWith(search.toLowerCase()) ||
+            row.Information.toLowerCase().startsWith(search.toLowerCase()) ||
+            row.Date.toLowerCase().startsWith(search.toLowerCase()) ||
+            row.email.toLowerCase().startsWith(search.toLowerCase()) ||
+            row.carNumber.toLowerCase().startsWith(search.toLowerCase())
+          );
+        })
+      );
+      setCurrentRecords(Array.from(response.data).slice(indexOfFirstRecord, indexOfLastRecord));
+    })
+    .catch((error) => console.error(error));
+   
+}, []); // The empty array ensures that the effect only runs on mount
+
+
+ 
+
+
+
+
 let totalPages = Math.ceil(filteredData.length / recordsPerPage);
 
 
@@ -208,11 +154,15 @@ function handleSearch(event)
 
 
   function sortByNumber() {
+    let a1;
+    let b1;
     const sortedData = Array.from(currentRecords).sort((a, b) => {
       if (sortOrder === 'asc') {
-        return a.treatNumber > b.treatNumber ? 1 : -1;
+       a1=parseInt(a.treatNumber);
+       b1=parseInt(b.treatNumber);
+        return a1 > b1 ? 1 : -1;
       } else {
-        return a.treatNumber< b.treatNumber ? 1 : -1;
+        return a1< b1 ? 1 : -1;
       }
     });
     setCurrentRecords(sortedData);
@@ -254,11 +204,15 @@ function handleSearch(event)
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   }
   function sortByCarNumber() {
+    let a1;
+    let b1;
     const sortedData = Array.from(currentRecords).sort((a, b) => {
       if (sortOrder === 'asc') {
-        return a.carNumber > b.carNumber ? 1 : -1;
+        a1=parseInt(a.treatNumber);
+        b1=parseInt(b.treatNumber);
+        return a1 > b1 ? 1 : -1;
       } else {
-        return a.carNumber < b.carNumber ? 1 : -1;
+        return a1 < b1 ? 1 : -1;
       }
     });
     setCurrentRecords(sortedData);
@@ -271,7 +225,9 @@ function handleSearch(event)
     setFilteredData(filteredData.filter(row=> row.treatNumber !== id));
     const data = filteredData.filter(row=> row.treatNumber !== id);
     setCurrentRecords(data.slice(indexOfFirstRecord, indexOfLastRecord));
- 
+    Axios.post("http://localhost:3001/deleteRow", {
+      treatNumber:id,
+    });
 
   }
 
@@ -281,7 +237,7 @@ function handleSearch(event)
       
       <div className="container-fluid">
           <Dashboard/>
-  
+
     <input 
       type="text"
       className="form-control"
@@ -315,14 +271,13 @@ function handleSearch(event)
                     defaultValue={row.Information}
                     name="Information"
                     onChange={handleInputChange}
-                    ref={input => {
-                      input && input.focus();
-                    }}
+     
+                    
                   />
                 </td>
                 <td>
                   <input
-                    type="text"
+                    type="datetime-local"
                     defaultValue={row.Date}
                     name="Date"
                     onChange={handleInputChange}
@@ -428,3 +383,4 @@ function handleSearch(event)
 
 
 }
+
