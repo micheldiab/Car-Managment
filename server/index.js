@@ -105,30 +105,19 @@ db.query("UPDATE cars SET Information = ?,Date=?,email=?,carNumber=? WHERE treat
     
     let text="Your new password is:";
     text+=newPassword;
-   
 
-    db.query("Select * FROM users WHERE email = ?", [email] 
-    ,(err, result) => {
-      if (err)
-      {
-       throw err;
-      }
-
-      else if(result.length===0)
-      res.send("-1");
-      else
-      {
     db.query("UPDATE users SET password = ? WHERE email = ?", [pass,email] 
-    ,(err, result) => {
-    
-      
-    
+    ,(err, result) => {  
+    if(result.affectedRows===0)
+    {
+    res.send("-1");
+    return;
+    }
     });
-  }
 
-  });
   sendEmail(email,subject,text);
        res.send("0");
+       return;
 });
 
 
