@@ -101,19 +101,33 @@ db.query("UPDATE cars SET Information = ?,Date=?,email=?,carNumber=? WHERE treat
     const email = req.body.email;
     const newPassword=generatePassword();
     const pass=md5(newPassword);
-    const subject="Reset password"
     
-    let text="Your new password is:";
-    text+=newPassword;
 
+    db.query("Select * FROM users WHERE email = ?", [email] 
+    ,(err, result) => {
+      if (err)
+      {
+       throw err;
+      }
+
+      else if(result.length===0)
+      res.send("-1");
+      else
+      {
     db.query("UPDATE users SET password = ? WHERE email = ?", [pass,email] 
-    ,(err, result) => {  
-
-    });
-
-  sendEmail(email,subject,text);
+    ,(err, result) => {
+        const subject="Reset password"
+    
+        let text="Your new password is:";
+        text+=newPassword;
+       sendEmail(email,subject,text);
        res.send("0");
-       return;
+      
+    
+    });
+  }
+
+  });
 });
 
 
