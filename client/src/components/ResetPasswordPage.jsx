@@ -21,29 +21,18 @@ export default function ResetPasswordPage()
             return;
           }
 
-          let flag=-1;
+          
           Axios.post("https://car-managment.vercel.app/forgotPassword", {
             email: userEmail,
           }).then((response) => {
-            if(!(response.data ===0))
+            if(response.data ===-1)
             setStatus("This email doesn't exist")
-
             else
             {
-     
-            flag=0;
+            setStatus("Check your email for the new password")
+            console.log(response.data);
             }
           });
-        console.log(flag);
-          if(flag===0)
-          {
-            Axios.post("https://car-managment.vercel.app/updatePassword", {
-                email: userEmail,
-              }).then((response) => {
-                setStatus("Check your email for the new password")
-              });
-          }
-          
 
     }
 return (
