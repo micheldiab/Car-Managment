@@ -7,7 +7,7 @@ import {useState,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Axios from "axios";
-export default function LoginPage()
+export default function LoginPage(props)
 {
     const md5 = require('md5');
     const history = useNavigate();
@@ -25,9 +25,11 @@ export default function LoginPage()
         if (storedSession) {
           // If the session is stored, fill in the username and password
           const session = JSON.parse(storedSession);
-          setEmail(session.userEmail);
-          setPassword(session.userPassword);
-          setRememberMe(1);
+          if(session.rememberMe)
+          {
+
+          history('/Dashboard');
+          }
         }
       }, []); // Only run this effect once
    
@@ -46,12 +48,16 @@ export default function LoginPage()
 
 
     const validateLogin=(event)=> {
+        const storedSession = localStorage.getItem('session');
         event.preventDefault();
-   
+       if (storedSession)
+       history('/Dashboard');
+
         if(reCAPTCHAValue===0){
             setStatus("You must solve the ReCAPTCHA");
             return;
         }
+    
         if (userEmail.search(/@/) === -1) {
        
             setStatus("Your email must contains @");
@@ -83,14 +89,19 @@ export default function LoginPage()
             return;
            }
 
- 
+           console.log(userEmail);
+           console.log(userPassword);
+           console.log(md5(userPassword));
            Axios.post("https://car-managment.vercel.app/userLogin", {
            email: userEmail,
            password: md5(userPassword)
          }).then((response) => {
            console.log(response);
            if(response.data===-1)  
+           {
            setStatus("The username or password is incorrect");
+           localStorage.clear();
+           }
            else
            {
                setStatus("connected");
@@ -98,8 +109,8 @@ export default function LoginPage()
          }});
 
          if (rememberMe) {
-            localStorage.setItem('session', JSON.stringify({ userEmail, userPassword }));
-            history('/Dashboard');
+            localStorage.setItem('session', JSON.stringify({rememberMe}));
+       
         
         }
         

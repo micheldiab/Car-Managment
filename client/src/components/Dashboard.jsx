@@ -15,6 +15,7 @@ const handleAboutUs=()=> {
   history('/AboutUs');
 }
 const handleLogOut=()=> {
+  localStorage.clear();
   history('/login');
 }
 
