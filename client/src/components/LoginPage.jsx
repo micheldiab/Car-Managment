@@ -99,6 +99,7 @@ export default function LoginPage()
 
          if (rememberMe) {
             localStorage.setItem('session', JSON.stringify({ userEmail, userPassword }));
+            history('/Dashboard');
         
         }
         

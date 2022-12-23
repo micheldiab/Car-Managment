@@ -18,7 +18,6 @@ export default function  Table()
   const [date, setDate] = useState();
   const [inputValues, setInputValues] = useState({});
   const [status, setStatus] = useState("");
-  const [flag, setFlag] = useState(0);
 
  const handleAddRow =() =>
  {
@@ -53,7 +52,7 @@ export default function  Table()
         .catch((error) => console.error(error));
        
         setStatus("Row was added Successfully!");
-        setFlag(1);
+       
       setInformation("");
       setCarNumber("");
       setEmail("");
