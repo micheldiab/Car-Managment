@@ -29,15 +29,20 @@ const db = mysql.createConnection({
   app.post("/deleteRow", (req, res) => {
     const treatNumber = req.body.treatNumber;
   
-    db.query("Delete FROM cars WHERE treatNumber = ?", [treatNumber] ,(err, result) => {
-      if (result.length===0) {
+    // Delete the row with the specified treatNumber
+    db.query("DELETE FROM cars WHERE treatNumber = ?", [treatNumber], (err, result) => {
+      if (result.length === 0) {
         res.send("-1");
       } else {
-        res.send("0");
-        console.log(result);
+        // Set @new_id to 0 and update the IDs of the remaining rows
+        db.query("SET @new_treatNumber  = 0; UPDATE cars SET treatNumber  = @new_treatNumber :=@new_treatNumber +1;", (err, result) => {
+          res.send("0");
+          console.log(result);
+        });
       }
     });
   });
+  
   app.post("/editRow", (req, res) => {
     const treatNumber = req.body.treatNumber;
     const valInformation = req.body.valInformation;

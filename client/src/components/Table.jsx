@@ -5,7 +5,6 @@ import './Table.css';
 import Dashboard from './Dashboard';
 import Axios from "axios";
 
-
 export default function  Table() 
 {
 
@@ -15,18 +14,60 @@ export default function  Table()
   const [editingId, setEditingId] = useState(null);
   const [information, setInformation] = useState("");
   const [email, setEmail] = useState("");
-  const [carNumber, setCarNumber] = useState(0);
+  const [carNumber, setCarNumber] = useState();
   const [date, setDate] = useState();
   const [inputValues, setInputValues] = useState({});
-
+  const [status, setStatus] = useState("");
+  const [flag, setFlag] = useState(0);
 
  const handleAddRow =() =>
  {
-  console.log(information);
-  console.log(date);
-  console.log(email);
-  console.log(carNumber);
+
+
+  Axios.post("https://car-managment.vercel.app/addCar", {
+    
+  Information:information,
+    Date:date,
+    email:email,
+    carNumber:carNumber
+      }).then((response) => {
+        
+
+        Axios.get("https://car-managment.vercel.app/cars")
+        .then((response) => {
+       
+          setData(response.data);
+          setFilteredData(
+            Array.from(response.data).filter((row) => {
+              return (
+                row.treatNumber.toString().toLowerCase().startsWith(search.toLowerCase()) ||
+                row.Information.toLowerCase().startsWith(search.toLowerCase()) ||
+                row.Date.toLowerCase().startsWith(search.toLowerCase()) ||
+                row.email.toLowerCase().startsWith(search.toLowerCase()) ||
+                row.carNumber.toLowerCase().startsWith(search.toLowerCase())
+              );
+            })
+          );
+          setCurrentRecords(Array.from(response.data).slice(indexOfFirstRecord, indexOfLastRecord));
+        })
+        .catch((error) => console.error(error));
+       
+        setStatus("Row was added Successfully!");
+        setFlag(1);
+      setInformation("");
+      setCarNumber("");
+      setEmail("");
+      setDate("");
+
+});
+
+
+
  }
+
+
+ 
+
 
 
   const handleInformation =(event) =>
@@ -152,18 +193,7 @@ function handlePagePlus(pageNumber) {
 }
 }
 
-function handleInsert()
-{
-  Axios.post("https://car-managment.vercel.app/addCar", {
-    treatNumber:"10",
-    Information:"aa",
-    Date:"2045-01-08 10:16:10",
-    email:"michel@",
-    carNumber:"123485"
-  });
 
-
-}
 function handlePageMinus(pageNumber) {
   if(pageNumber>0)
   {
@@ -282,6 +312,7 @@ function handleSearch(event)
     return (
       
       <div className="container-fluid">
+        
           <Dashboard/>
 
     <input 
@@ -290,65 +321,71 @@ function handleSearch(event)
       placeholder="Search..."
       onChange={handleSearch}
     />
-    <table className="table table-striped">
+   
+    <table className="table table-striped" style={{ resize: 'both', minWidth: '100px', maxWidth: '3000px' }}>
       <thead>
         <tr style={{cursor:"pointer",background:"blue",border:"solid 5px black",color:"white"}}>
-        <th>Treatment Info</th>
-        <th>Date</th>
-        <th>Worker email </th>
-        <th>Car Num</th>
-        <th>Action</th>
+        <th style={{ resize: 'both', minWidth: '20px', maxWidth: '600px' }}>Treatment Info</th>
+        <th style={{ resize: 'both', minWidth: '20px', maxWidth: '600px' }}>Date</th>
+        <th style={{ resize: 'both', minWidth: '20px', maxWidth: '600px' }}>Worker email </th>
+        <th style={{ resize: 'both', minWidth: '20px', maxWidth: '600px' }}>Car Num</th>
+        <th style={{ resize: 'both', minWidth: '20px', maxWidth: '600px' }}>Action</th>
         </tr>
       </thead>
       <tbody>
-      <tr>
-                <td>
+      <tr style={{ resize: 'both', minWidth: '50px', maxWidth: '600px' }}>
+                <td style={{ resize: 'both', minWidth: '10px', maxWidth: '600px' }}>
                   <input
                     type="text"
-               
+                    value={information}
                     name="Information"
                     onChange={handleInformation}
                     required
-     
+                  
                     
                   />
                 </td>
-                <td>
+                <td style={{ resize: 'both', minWidth: '20px', maxWidth: '600px' }}>
                   <input
                     type="datetime-local"
-                 
+                    value={date}
                     name="Date"
                     onChange={handleDate}
                     required
+                    
                   />
                 </td>
-                <td>
+                <td style={{ resize: 'both', minWidth: '20px', maxWidth: '600px' }}>
                   <input
                     type="text"
-                 
+                    value={email}
                     name="email"
                     onChange={handleEmail}
                     required
                   />
                 </td>
-                <td>
-                  <input
-                    type="text"
-                  
-                    name="carNumber"
-                    onChange={handleCarNumber}
-                    required
-                  />
+                <td style={{ resize: 'both', minWidth: '20px', maxWidth: '600px' }}>
+                {/* <input type="text" name="carNumber" value={carNumber} onChange={handleCarNumber}  required /> */}
+           
+                        <input type="text" name="carNumber" onChange={handleCarNumber}  value={carNumber}
+                            required />
                 </td>
               
                 <td>
-                  <button type="button" onClick={handleAddRow} >Add row</button>
+                <button type="button" onClick={handleAddRow} disabled={!information || !date || !email || !carNumber || !email.includes('@')}>Add row</button>
 
                 </td>
                 </tr>
       
       </tbody>
     </table>
+
+
+    <div className="alert alert-success" role="alert">
+                                       {status}
+      
+                                    </div>
+
 
 
 
@@ -444,15 +481,7 @@ function handleSearch(event)
     <nav aria-label="Page navigation example" className="d-block">
       <ul className="pagination flex-wrap-nowrap">
 
-      <li className="page-item d-flex align-items-center">
-          <a
-            className="page-link"
-            href="#"
-            onClick={handleInsert}
-          >
-            Insert
-          </a>
-        </li>
+   
         
         <li className="page-item d-flex align-items-center">
           <a
