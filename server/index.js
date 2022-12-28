@@ -9,7 +9,7 @@ const md5 = require('md5');
 
 const db = mysql.createConnection({
   user: "admin",
-  host: "carmanagement123456.ccnnq8gjj4co.ap-northeast-1.rds.amazonaws.com",
+  host: "database-carmanagement123456.ccnnq8gjj4co.ap-northeast-1.rds.amazonaws.com",
   password: "carmanagement2022",
   database: "sys",
 });
@@ -218,7 +218,7 @@ function generatePassword() {
 
 
   db.connect((err) => {
-    if (err) console.log("Enable to Connected to MySQL Server!");
+    if (err) console.log("Unable to Connect to MySQL Server!");
     console.log("Connected to MySQL Server!");
   });
   app.listen(process.env.PORT || 3001, () => {
