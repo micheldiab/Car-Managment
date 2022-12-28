@@ -8,10 +8,10 @@ app.use(express.json());
 const md5 = require('md5');
 
 const db = mysql.createConnection({
-  user: "sql6585805",
-  host: "sql6.freesqldatabase.com",
-  password: "K5lfHEzg1T",
-  database: "sql6585805",
+  user: "admin",
+  host: "carmanagement123456.ccnnq8gjj4co.ap-northeast-1.rds.amazonaws.com",
+  password: "carmanagement2022",
+  database: "sys",
 });
 
 
