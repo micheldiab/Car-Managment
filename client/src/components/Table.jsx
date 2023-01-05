@@ -23,7 +23,7 @@ export default function  Table()
  {
 
 
-  Axios.post("/addCar", {
+  Axios.post("https://car-managment.vercel.app/addCar", {
     
   Information:information,
     Date:date,
@@ -32,7 +32,7 @@ export default function  Table()
       }).then((response) => {
         
 
-        Axios.get("/cars")
+        Axios.get("https://car-managment.vercel.app/cars")
         .then((response) => {
        
           setData(response.data);
@@ -110,7 +110,7 @@ setInformation(event.target.value);
     })
     
 
-    Axios.post("/editRow", {
+    Axios.post("https://car-managment.vercel.app/editRow", {
               treatNumber: id,
               valInformation:updatedData[id-1].Information,
               valDate:updatedData[id-1].Date,
@@ -145,7 +145,7 @@ setInformation(event.target.value);
   let  indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
 
 useEffect(() => {
-  Axios.get("/cars")
+  Axios.get("https://car-managment.vercel.app/cars")
     .then((response) => {
    
       setData(response.data);
@@ -300,7 +300,7 @@ function handleSearch(event)
     setFilteredData(filteredData.filter(row=> row.treatNumber !== id));
     const data = filteredData.filter(row=> row.treatNumber !== id);
     setCurrentRecords(data.slice(indexOfFirstRecord, indexOfLastRecord));
-    Axios.post("/deleteRow", {
+    Axios.post("https://car-managment.vercel.app/deleteRow", {
       treatNumber:id,
     });
 
