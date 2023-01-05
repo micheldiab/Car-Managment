@@ -92,7 +92,7 @@ export default function RegistrationPage()
            }
     
            
-           Axios.post("https://car-managment.vercel.app/addUser", {
+           Axios.post("/addUser", {
             firstName: firstName,
             lastName: lastName,
             email: userEmail,
@@ -110,7 +110,7 @@ export default function RegistrationPage()
           }});
     
     
-          Axios.post("https://car-managment.vercel.app/sendEmail", {
+          Axios.post("/sendEmail", {
             email: userEmail,
           }).then((response) => {
           });

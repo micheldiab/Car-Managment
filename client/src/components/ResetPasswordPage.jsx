@@ -23,14 +23,14 @@ export default function ResetPasswordPage()
           }
 
           
-          Axios.post("https://car-managment.vercel.app/forgotPassword", {
+          Axios.post("/forgotPassword", {
             email: userEmail,
           }).then((response) => {
             if(response.data ===-1)
             setStatus("This email doesn't exist")
             else
             {
-            Axios.post("https://car-managment.vercel.app/sendResetPassword", {
+            Axios.post("/sendResetPassword", {
                     email: userEmail,
                     password:response.data,
                   }).then((response) => {
