@@ -32,7 +32,7 @@ export default function  Table()
       }).then((response) => {
         
 
-        Axios.get("https://car-managment.vercel.app/cars")
+        Axios.get("/cars")
         .then((response) => {
        
           setData(response.data);
