@@ -16,7 +16,7 @@ export const useAuth = () => {
   return { user, login, logout };
 };
 const ProtectedRoutes = () => {
-    const  user  = useAuth();
+    const { user } = useAuth();
     console.log(user);
     return user ? <Outlet /> : <Navigate to="/" /> ;
 };
