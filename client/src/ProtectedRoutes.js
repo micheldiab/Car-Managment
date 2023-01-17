@@ -6,7 +6,6 @@ export const useAuth = () => {
   const [user, setUser] = useState({ loggedIn: false });
 
   const login = () => {
-    console.log("yes");
     setUser({ loggedIn: true });
   };
 
@@ -18,6 +17,7 @@ export const useAuth = () => {
 };
 const ProtectedRoutes = () => {
     const { user } = useAuth();
+    console.log(user);
     return user.loggedIn ? <Outlet /> : <Navigate to="/" /> ;
 };
 
