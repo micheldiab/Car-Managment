@@ -6,6 +6,8 @@ import carimage from '../images/logincar.png'
 import {useState,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { useAuth } from '../ProtectedRoutes';
+
 import Axios from "axios";
 export default function LoginPage(props)
 {
@@ -18,6 +20,7 @@ export default function LoginPage(props)
     
     const [reCAPTCHAValue, setReCAPTCHAValue] = useState(0);
     const [cookies, setCookie] = useCookies(['session']);
+    const { user, login } = useAuth();
 
       useEffect(() => {
         // Check for a stored session in local storage
@@ -105,6 +108,7 @@ export default function LoginPage(props)
            }
            else
            {
+            login();
                setStatus("connected");
                history('/Dashboard');
          }});
