@@ -20,7 +20,7 @@ export default function LoginPage(props)
     
     const [reCAPTCHAValue, setReCAPTCHAValue] = useState(0);
     const [cookies, setCookie] = useCookies(['session']);
-    const { user, login } = useAuth();
+    const { login } = useAuth();
 
       useEffect(() => {
         // Check for a stored session in local storage
