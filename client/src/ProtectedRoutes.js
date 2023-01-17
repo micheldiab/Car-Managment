@@ -6,6 +6,7 @@ export const useAuth = () => {
   const [user, setUser] = useState({ loggedIn: false });
 
   const login = () => {
+    console.log("yes");
     setUser({ loggedIn: true });
   };
 
