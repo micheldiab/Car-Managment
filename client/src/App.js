@@ -16,13 +16,15 @@ function App() {
 
     <Routes>
     <Route path="/" element={<LoginPage />} />
-    <Route element={<ProtectedRoutes />}>
     <Route path="/login" element={<LoginPage />} />
     <Route path="/forgot-password" element={<ResetPasswordPage />} />
     <Route path="/register"element={<RegistrationPage />} />
-    <Route path="/Dashboard"element={<Table />} />
     <Route path="*"element={<Page404 />} />
+
+    <Route element={<ProtectedRoutes />}>
+    <Route path="/Dashboard"element={<Table />} />
     <Route path='AboutUs' element={<AboutUs />} />
+
     </Route>
   </Routes>
   );
