@@ -6,7 +6,7 @@ import carimage from '../images/logincar.png'
 import {useState,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { useAuth } from '../ProtectedRoutes';
+import { useAuth } from "../useAuth"
 
 import Axios from "axios";
 export default function LoginPage(props)
@@ -93,14 +93,10 @@ export default function LoginPage(props)
             return;
            }
 
-           console.log(userEmail);
-           console.log(userPassword);
-           console.log(md5(userPassword));
            Axios.post("https://car-managment.vercel.app/userLogin", {
            email: userEmail,
            password: md5(userPassword)
          }).then((response) => {
-           console.log(response);
            if(response.data===-1)  
            {
            setStatus("The username or password is incorrect");
