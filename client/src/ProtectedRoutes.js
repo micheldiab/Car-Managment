@@ -8,9 +8,7 @@ export const useAuth = () => {
   const [user, setUser] = useState(0);
 
   const login = () => {
-    console.log(x);
     x=1;
-    console.log(x);
     setUser(1);
   };
 
