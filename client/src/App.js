@@ -7,6 +7,7 @@ import ResetPasswordPage from './components/ResetPasswordPage';
 import Page404 from './components/404Page';
 import Table from './components/Table';
 import AboutUs from './components/AboutUS';
+import ProtectedRoutes from "./ProtectedRoutes";
 
 
 
@@ -15,13 +16,14 @@ function App() {
 
     <Routes>
     <Route path="/" element={<LoginPage />} />
+    <Route element={<ProtectedRoutes />}>
     <Route path="/login" element={<LoginPage />} />
     <Route path="/forgot-password" element={<ResetPasswordPage />} />
     <Route path="/register"element={<RegistrationPage />} />
     <Route path="/Dashboard"element={<Table />} />
     <Route path="*"element={<Page404 />} />
     <Route path='AboutUs' element={<AboutUs />} />
- 
+    </Route>
   </Routes>
   );
 }
