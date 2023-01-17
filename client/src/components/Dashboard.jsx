@@ -1,11 +1,13 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../ProtectedRoutes"
 
 
 export default function Dashboard() {
 
   const history = useNavigate();
+  const { user,login,logout } = useAuth();
   
 const handleDashboard=()=> {
   history('/Dashboard');
@@ -16,6 +18,7 @@ const handleAboutUs=()=> {
 }
 const handleLogOut=()=> {
   localStorage.clear();
+  logout();
   history('/login');
 }
 

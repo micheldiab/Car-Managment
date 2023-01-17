@@ -6,7 +6,7 @@ import carimage from '../images/logincar.png'
 import {useState,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { useAuth } from "../useAuth"
+import { useAuth } from "../ProtectedRoutes"
 
 import Axios from "axios";
 export default function LoginPage(props)
@@ -30,7 +30,7 @@ export default function LoginPage(props)
           const session = JSON.parse(storedSession);
           if(session.rememberMe)
           {
-
+        login();
           history('/Dashboard');
           }
         }
@@ -158,7 +158,7 @@ return(
                                         <input type="checkbox" className="custom-control-input"   id="rememberMe"
           checked={rememberMe}
           onChange={(event) => setRememberMe(event.target.checked)}/>
-                                        <label className="custom-control-label" for="customCheck">Remember
+                                        <label className="custom-control-label" htmlFor="customCheck">Remember
                                             Me</label>
                                     </div>
                                 </div>
