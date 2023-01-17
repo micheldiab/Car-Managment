@@ -3,14 +3,14 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useState } from 'react';
 
 export const useAuth = () => {
-  const [user, setUser] = useState({ loggedIn: false });
+  const [user, setUser] = useState(0);
 
   const login = () => {
-    setUser({ loggedIn: true });
+    setUser(1);
   };
 
   const logout = () => {
-    setUser({ loggedIn: false });
+    setUser(0);
   };
 
   return { user, login, logout };
@@ -18,7 +18,7 @@ export const useAuth = () => {
 const ProtectedRoutes = () => {
     const { user } = useAuth();
     console.log(user);
-    return user.loggedIn ? <Outlet /> : <Navigate to="/" /> ;
+    return user ? <Outlet /> : <Navigate to="/" /> ;
 };
 
 export default ProtectedRoutes;
