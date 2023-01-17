@@ -16,9 +16,11 @@ export default function ResetPasswordPage()
 
     const validateEmail=()=> {
     
-        if (userEmail.search(/@/) === -1) {
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    
+        if (emailRegex.test(userEmail) === false) {
        
-            setStatus("Your email must contains @");
+            setStatus("Your email format is incorrect");
             return;
           }
 
