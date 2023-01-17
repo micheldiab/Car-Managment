@@ -8,10 +8,12 @@ import Page404 from './components/404Page';
 import Table from './components/Table';
 import AboutUs from './components/AboutUS';
 import ProtectedRoutes from "./ProtectedRoutes";
+import { useAuth } from "./useAuth";
 
 
 
 function App() {
+  const { user, login, logout } = useAuth();
   return (
 
     <Routes>
@@ -21,7 +23,7 @@ function App() {
     <Route path="/register"element={<RegistrationPage />} />
     <Route path="*"element={<Page404 />} />
 
-    <Route element={<ProtectedRoutes />}>
+    <Route element={<ProtectedRoutes />} user={user}>
     <Route path="/Dashboard"element={<Table />} />
     <Route path='AboutUs' element={<AboutUs />} />
 
