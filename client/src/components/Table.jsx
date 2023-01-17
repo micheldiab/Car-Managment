@@ -34,7 +34,6 @@ export default function  Table()
 
         Axios.get("https://car-managment.vercel.app/cars")
         .then((response) => {
-       
           setData(response.data);
           setFilteredData(
             Array.from(response.data).filter((row) => {
