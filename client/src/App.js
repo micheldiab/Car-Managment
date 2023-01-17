@@ -23,7 +23,7 @@ function App() {
     <Route path="/register"element={<RegistrationPage />} />
     <Route path="*"element={<Page404 />} />
 
-    <Route element={<ProtectedRoutes />} user={user}>
+    <Route element={<ProtectedRoutes  user={user} />}>
     <Route path="/Dashboard"element={<Table />} />
     <Route path='AboutUs' element={<AboutUs />} />
 
