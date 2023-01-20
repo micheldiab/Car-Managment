@@ -53,8 +53,8 @@ export default function RegistrationPage()
       }
 
         if(reCAPTCHAValue===0){
-            setStatus("You must solve the ReCAPTCHA");
-            return;
+           setStatus("You must solve the ReCAPTCHA");
+           return;
         }
         const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     
@@ -116,7 +116,8 @@ export default function RegistrationPage()
             email: userEmail,
           }).then((response) => {
           });
-          setStatus("Sign up successfully ");
+          window.alert("Sign up successfully");
+          setStatus("");
          
     }
 
